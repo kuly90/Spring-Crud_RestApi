@@ -1,5 +1,9 @@
 com\letsstartcoding\springbootrestapiexample\controller\EmployeeController.class
 com\letsstartcoding\springbootrestapiexample\model\Employee.class
 com\letsstartcoding\springbootrestapiexample\dao\EmployeeDAO.class
+com\letsstartcoding\springbootrestapiexample\controller\ProjectTaskController.class
+com\letsstartcoding\springbootrestapiexample\model\ProjectTask.class
+com\letsstartcoding\springbootrestapiexample\dao\ProjectTaskDAO.class
 com\letsstartcoding\springbootrestapiexample\EmployeeApplication.class
+com\letsstartcoding\springbootrestapiexample\repository\ProjectTaskRepository.class
 com\letsstartcoding\springbootrestapiexample\repository\EmployeeRepository.class

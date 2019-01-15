@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.letsstartcoding.springbootrestapiexample.dao.EmployeeDAO;
+import com.letsstartcoding.springbootrestapiexample.dao.ProjectTaskDAO;
 import com.letsstartcoding.springbootrestapiexample.model.Employee;
+import com.letsstartcoding.springbootrestapiexample.model.ProjectTask;
 
 @RestController
 @RequestMapping("/company")
@@ -24,6 +26,9 @@ public class EmployeeController {
 
 	@Autowired
 	EmployeeDAO employeeDAO;
+	
+	@Autowired
+	ProjectTaskDAO projectTaskDAO;
 	
 	//to save an employee
 	@PostMapping("/employees")
@@ -79,8 +84,61 @@ public class EmployeeController {
 		return ResponseEntity.ok().body(emp);
 	}
 	
+	// Project Task
 	
-	
-	
+	//to save an project task
+		@PostMapping("/board")
+		public ProjectTask createProjectTask(@Valid @RequestBody ProjectTask pro) {
+			
+			return projectTaskDAO.save(pro);
+		}
+		
+		//get all Project Task
+		@GetMapping("/board")
+		public List<ProjectTask> getAllProjectTask(){
+			
+			return projectTaskDAO.findAll();
+		}
+		
+		//get a project Task by id
+		@GetMapping("/board/{id}")
+		public ResponseEntity<ProjectTask> getProjectTaskById(@PathVariable(value="id") Long proId){
+			
+			ProjectTask projectTask = projectTaskDAO.findOne(proId);
+			if(projectTask == null) {
+				return ResponseEntity.notFound().build();
+			}
+			return ResponseEntity.ok().body(projectTask);
+				
+		}
+		
+		//update a projectTask
+		@PutMapping("/board/{id}")
+		public ResponseEntity<ProjectTask> updateProjectTask(@PathVariable(value="id") Long proId, @Valid @RequestBody ProjectTask protaskDetail){
+			
+			ProjectTask projectTask = projectTaskDAO.findOne(proId);
+			if(projectTask == null) {
+				return ResponseEntity.notFound().build();
+			}
+			projectTask.setSummary(protaskDetail.getSummary());
+			projectTask.setAcceptanceCriteria(protaskDetail.getAcceptanceCriteria());
+			projectTask.setStatus(protaskDetail.getStatus());
+			projectTaskDAO.save(protaskDetail);
+			
+			return ResponseEntity.ok().body(projectTask);
+		}
+		
+		//delete a projectTask
+		@DeleteMapping("/board/{id}")
+		public ResponseEntity<ProjectTask> deleteProjectTask(@PathVariable(value="id") Long proId){
+			
+			ProjectTask projectTask = projectTaskDAO.findOne(proId);
+			if(projectTask == null) {
+				return ResponseEntity.notFound().build();
+			}
+			projectTaskDAO.delete(projectTask);
+			
+			return ResponseEntity.ok().body(projectTask);
+		}
 	
 }
